@@ -13,10 +13,10 @@ public class MainActivity extends AppCompatActivity {
     private String curVal = "";
     private String operation = "";
     private String memStore = "";
-    TextView oldValTxtView;
-    TextView curOperationTxtView;
-    TextView curValTxtView;
-    TextView statusTextView;
+    private TextView oldValTxtView;
+    private TextView curOperationTxtView;
+    private TextView curValTxtView;
+    private TextView statusTextView;
     private Float result = null;
 
     @Override
@@ -214,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //remove last character
-                if (curVal.length() > 0 && curVal != null) {
+                if (curVal.length() > 0) {
                     curVal = curVal.substring(0, curVal.length() - 1);
                     curValTxtView.setText(curVal);
                 }
@@ -257,8 +257,10 @@ public class MainActivity extends AppCompatActivity {
             curOperationTxtView.setText("=");
             String tmpVal = oldVal.concat(operation).concat(curVal);
             oldValTxtView.setText(tmpVal);
-            curValTxtView.setText(String.valueOf(result));
-            curVal = String.valueOf(result);
+            String parsedResult = result.toString();
+            parsedResult = parsedResult.indexOf(".") < 0 ? parsedResult : parsedResult.replaceAll("0*$", "").replaceAll("\\.$", "");
+            curValTxtView.setText(parsedResult);
+            curVal = String.valueOf(parsedResult);
         }
     }
 }
