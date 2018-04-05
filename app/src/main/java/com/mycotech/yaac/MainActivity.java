@@ -210,6 +210,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        backSpaceBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //remove last character
+                if (curVal.length() > 0 && curVal != null) {
+                    curVal = curVal.substring(0, curVal.length() - 1);
+                    curValTxtView.setText(curVal);
+                }
+            }
+        });
+
     }
 
 
