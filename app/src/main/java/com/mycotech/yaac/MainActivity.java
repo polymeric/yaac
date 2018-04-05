@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     TextView oldValTxtView;
     TextView curOperationTxtView;
     TextView curValTxtView;
+    TextView statusTextView;
     private Float result = null;
 
     @Override
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         oldValTxtView = findViewById(R.id.oldValTxtView);
         curOperationTxtView = findViewById(R.id.curOperationTxtView);
         curValTxtView = findViewById(R.id.curValTxtView);
+        statusTextView = findViewById(R.id.statusTextView);
 
         Button oneBtn = findViewById(R.id.oneBtn);
         Button twoBtn = findViewById(R.id.twoBtn);
@@ -190,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 memStore = curVal;
+                statusTextView.setText("M+");
             }
         });
 
@@ -199,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
                 if (memStore.equals(curVal)) {
                     memStore = "";
                     curValTxtView.setText("0");
+                    statusTextView.setText("");
                 } else {
                     curValTxtView.setText(memStore);
                     curVal = memStore;
@@ -225,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
     private void calculate() {
         if (operation != null) {
             switch (operation) {
-                case "%":
+                case "/":
                     result = Float.parseFloat(oldVal) / Float.parseFloat(curVal);
                     break;
                 case "*":
