@@ -11,17 +11,20 @@ public class MainActivity extends AppCompatActivity {
 
     private String oldVal = "";
     private String curVal = "";
-    private String result = "";
     private String operation = "";
+    TextView oldValTxtView;
+    TextView curOperationTxtView;
+    TextView curValTxtView;
+    private Float result = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final TextView oldValTxtView = findViewById(R.id.oldValTxtView);
-        final TextView curOperationTxtView = findViewById(R.id.curOperationTxtView);
-        final TextView curValTxtView = findViewById(R.id.curValTxtView);
+        oldValTxtView = findViewById(R.id.oldValTxtView);
+        curOperationTxtView = findViewById(R.id.curOperationTxtView);
+        curValTxtView = findViewById(R.id.curValTxtView);
 
         Button oneBtn = findViewById(R.id.oneBtn);
         Button twoBtn = findViewById(R.id.twoBtn);
@@ -50,80 +53,175 @@ public class MainActivity extends AppCompatActivity {
         oneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                curVal.concat("1");
+                curVal = curVal.concat("1");
+                setCurVal();
             }
         });
 
         twoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                curVal.concat("2");
+                curVal = curVal.concat("2");
+                setCurVal();
             }
         });
 
         threeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                curVal.concat("3");
+                curVal = curVal.concat("3");
+                setCurVal();
             }
         });
 
         fourBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                curVal.concat("4");
+                curVal = curVal.concat("4");
+                setCurVal();
             }
         });
 
         fiveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                curVal.concat("5");
+                curVal = curVal.concat("5");
+                setCurVal();
             }
         });
 
         sixBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                curVal.concat("6");
+                curVal = curVal.concat("6");
+                setCurVal();
             }
         });
 
         sevenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                curVal.concat("7");
+                curVal = curVal.concat("7");
+                setCurVal();
             }
         });
 
         eightBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                curVal.concat("8");
+                curVal = curVal.concat("8");
+                setCurVal();
             }
         });
 
         nineBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                curVal.concat("9");
+                curVal = curVal.concat("9");
+                setCurVal();
             }
         });
 
         zeroBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                curVal.concat("0");
+                curVal = curVal.concat("0");
+                setCurVal();
             }
         });
 
         decimalBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                curVal.concat(".");
+                curVal = curVal.concat(".");
+                setCurVal();
             }
         });
 
+        equalBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calculate();
+            }
+        });
 
+        divBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setOperation("%");
+            }
+        });
+
+        multiplyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setOperation("/");
+            }
+        });
+
+        subBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setOperation("-");
+            }
+        });
+
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setOperation("+");
+            }
+        });
+
+        clrBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                oldValTxtView.setText("");
+                oldVal = "";
+                curOperationTxtView.setText("");
+                operation = "";
+                curValTxtView.setText("0");
+                curVal = "";
+            }
+        });
+
+    }
+
+
+    private void setCurVal() {
+        curValTxtView.setText(curVal);
+    }
+
+    private void setOperation(String curOp) {
+        operation = curOp;
+        curOperationTxtView.setText(operation);
+        oldValTxtView.setText(curVal);
+        oldVal = curVal;
+        curVal = "";
+        curValTxtView.setText("0");
+    }
+
+    private void calculate() {
+        if (operation != null) {
+            switch (operation) {
+                case "%":
+                    result = Float.parseFloat(oldVal) / Float.parseFloat(curVal);
+                    break;
+                case "*":
+                    result = Float.parseFloat(oldVal) * Float.parseFloat(curVal);
+                    break;
+                case "-":
+                    result = Float.parseFloat(oldVal) - Float.parseFloat(curVal);
+                    break;
+                case "+":
+                    result = Float.parseFloat(oldVal) + Float.parseFloat(curVal);
+                    break;
+
+            }
+            curOperationTxtView.setText("=");
+            String tmpVal = oldVal.concat(operation).concat(curVal);
+            oldValTxtView.setText(tmpVal);
+            curValTxtView.setText(String.valueOf(result));
+        }
     }
 }
