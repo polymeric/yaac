@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
     private String oldVal = "";
     private String curVal = "";
     private String operation = "";
+    private String memStore = "";
     TextView oldValTxtView;
     TextView curOperationTxtView;
     TextView curValTxtView;
@@ -148,14 +149,14 @@ public class MainActivity extends AppCompatActivity {
         divBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setOperation("%");
+                setOperation("/");
             }
         });
 
         multiplyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setOperation("/");
+                setOperation("*");
             }
         });
 
@@ -182,6 +183,26 @@ public class MainActivity extends AppCompatActivity {
                 operation = "";
                 curValTxtView.setText("0");
                 curVal = "";
+            }
+        });
+
+        memBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                memStore = curVal;
+            }
+        });
+
+        clrMemBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (memStore.equals(curVal)) {
+                    memStore = "";
+                    curValTxtView.setText("0");
+                } else {
+                    curValTxtView.setText(memStore);
+                    curVal = memStore;
+                }
             }
         });
 
@@ -222,6 +243,7 @@ public class MainActivity extends AppCompatActivity {
             String tmpVal = oldVal.concat(operation).concat(curVal);
             oldValTxtView.setText(tmpVal);
             curValTxtView.setText(String.valueOf(result));
+            curVal = String.valueOf(result);
         }
     }
 }
