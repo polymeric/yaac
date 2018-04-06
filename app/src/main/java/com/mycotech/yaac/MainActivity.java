@@ -1,10 +1,12 @@
 package com.mycotech.yaac;
 
+import android.icu.math.BigDecimal;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -17,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView curOperationTxtView;
     private TextView curValTxtView;
     private TextView statusTextView;
-    private Float result = null;
+    private BigDecimal result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -241,24 +243,24 @@ public class MainActivity extends AppCompatActivity {
         if (operation != null) {
             switch (operation) {
                 case "/":
-                    result = Float.parseFloat(oldVal) / Float.parseFloat(curVal);
+                    result = new BigDecimal(oldVal).divide(new BigDecimal(curVal));
                     break;
                 case "*":
-                    result = Float.parseFloat(oldVal) * Float.parseFloat(curVal);
+                    result = new BigDecimal(oldVal).multiply(new BigDecimal(curVal));
                     break;
                 case "-":
-                    result = Float.parseFloat(oldVal) - Float.parseFloat(curVal);
+                    result = new BigDecimal(oldVal).subtract(new BigDecimal(curVal));
                     break;
                 case "+":
-                    result = Float.parseFloat(oldVal) + Float.parseFloat(curVal);
+                    result = new BigDecimal(oldVal).add(new BigDecimal(curVal));
                     break;
 
             }
             curOperationTxtView.setText("=");
             String tmpVal = oldVal.concat(operation).concat(curVal);
             oldValTxtView.setText(tmpVal);
-            String parsedResult = result.toString();
-            parsedResult = parsedResult.indexOf(".") < 0 ? parsedResult : parsedResult.replaceAll("0*$", "").replaceAll("\\.$", "");
+            String parsedResult = String.valueOf(result);
+            //parsedResult = parsedResult.indexOf(".") < 0 ? parsedResult : parsedResult.replaceAll("0*$", "").replaceAll("\\.$", "");
             curValTxtView.setText(parsedResult);
             curVal = String.valueOf(parsedResult);
         }
